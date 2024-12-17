@@ -10,7 +10,6 @@ use App\Domain\RepositoryFilter\User\UserFilter;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ObjectRepository;
-use DomainException;
 
 class UserRepository implements UserRepositoryInterface
 {
@@ -31,7 +30,7 @@ class UserRepository implements UserRepositoryInterface
             ->select('u')
             ->from(User::class, 'u');
 
-        if ($filter->state !== null) {
+        if (null !== $filter->state) {
             $qb->andWhere($ex->eq('u.state', ':state'))
                 ->setParameter('state', $filter->state);
         }
@@ -39,9 +38,6 @@ class UserRepository implements UserRepositoryInterface
         return $qb;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function findUsers(UserFilter $filter): array
     {
         return $this
@@ -50,31 +46,22 @@ class UserRepository implements UserRepositoryInterface
             ->getResult();
     }
 
-    /**
-     * @inheritDoc
-     */
     public function findById(int $id): User
     {
         $user = $this->repository->find($id);
         if (!$user instanceof User) {
-            throw new DomainException('User not found.');
+            throw new \DomainException('User not found.');
         }
 
         return $user;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function save(User $user): void
     {
         $this->em->persist($user);
         $this->em->flush();
     }
 
-    /**
-     * @inheritDoc
-     */
     public function delete(User $user): void
     {
         $this->em->remove($user);

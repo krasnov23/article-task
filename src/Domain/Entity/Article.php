@@ -3,7 +3,6 @@
 namespace App\Domain\Entity;
 
 use App\Infrastructure\Persistence\Doctrine\Repository\Article\ArticleRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
@@ -17,7 +16,7 @@ class Article
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255,unique: true)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $uniqueCode = null;
 
     #[ORM\Column]

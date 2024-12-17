@@ -8,12 +8,13 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class ArticleService
 {
-    public function __construct(private ArticleRepository $articleRepository,
-                                private SluggerInterface $slugger)
-    {
+    public function __construct(
+        private ArticleRepository $articleRepository,
+        private SluggerInterface $slugger
+    ) {
     }
 
-    public function getAllActiveArticles():array
+    public function getAllActiveArticles(): array
     {
         return $this->articleRepository->getActiveArticles();
     }
@@ -22,8 +23,7 @@ class ArticleService
     {
         $article = $this->articleRepository->getArticleByUniqueCode($uniqueName);
 
-        if (!$article)
-        {
+        if (!$article) {
             return null;
         }
 
@@ -31,39 +31,33 @@ class ArticleService
 
         $article->setAmountViews($amountViews);
 
-        $this->articleRepository->save($article,true);
+        $this->articleRepository->save($article, true);
 
         return $article;
-
     }
 
     public function addArticles(): void
     {
         $articlesAlreadyExists = $this->articleRepository->getActiveArticles();
 
-        if (count($articlesAlreadyExists) < 10)
-        {
-            for ($i = 1;$i <= 20;$i++)
-            {
+        if (count($articlesAlreadyExists) < 10) {
+            for ($i = 1; $i <= 20; ++$i) {
                 $title = "новость $i";
                 $currentDateTime = new \DateTimeImmutable();
                 $article = new Article();
                 $article->setTitle($title);
-                $article->setUniqueCode($this->slugger->slug($title) . "-" . uniqid());
+                $article->setUniqueCode($this->slugger->slug($title).'-'.uniqid());
                 $article->setDescription("description of title number $i");
                 $article->setAmountViews(0);
-                $article->setCreatedDate($currentDateTime->modify("-1 day")->modify("+$i hour"));
+                $article->setCreatedDate($currentDateTime->modify('-1 day')->modify("+$i hour"));
                 $article->setActivity(true);
 
-                if ($i > 10)
-                {
+                if ($i > 10) {
                     $article->setActivity(false);
                 }
 
-                $this->articleRepository->save($article,true);
+                $this->articleRepository->save($article, true);
             }
         }
-
     }
-
 }

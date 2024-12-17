@@ -24,13 +24,13 @@ class ArticleRepository extends ServiceEntityRepository
             ->getQuery()->getResult();
     }
 
-    public function getArticleByUniqueCode(string $uniqueCode):?Article
+    public function getArticleByUniqueCode(string $uniqueCode): ?Article
     {
-         return $this->createQueryBuilder('a')
-            ->where('a.activity = true')
-            ->andWhere('a.uniqueCode = :uniqueCode')
-            ->setParameter('uniqueCode',$uniqueCode)
-            ->getQuery()->getOneOrNullResult();
+        return $this->createQueryBuilder('a')
+           ->where('a.activity = true')
+           ->andWhere('a.uniqueCode = :uniqueCode')
+           ->setParameter('uniqueCode', $uniqueCode)
+           ->getQuery()->getOneOrNullResult();
     }
 
     public function save(Article $entity, bool $flush = false): void

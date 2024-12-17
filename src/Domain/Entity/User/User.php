@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Entity\User;
 
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -24,12 +23,12 @@ class User
     private string $password;
 
     #[ORM\Column(type: 'datetime_immutable')]
-    private ?DateTimeImmutable $createdAt;
+    private ?\DateTimeImmutable $createdAt;
 
     public function __construct(
         ?string $username,
         string $password,
-        ?DateTimeImmutable $createdAt,
+        ?\DateTimeImmutable $createdAt,
         bool $state = true,
     ) {
         $this->id = null;
@@ -71,7 +70,7 @@ class User
         return $this->password;
     }
 
-    public function getCreatedAt(): ?DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }

@@ -2,7 +2,6 @@
 
 namespace App\Presentation\Http\App\Controller\Frontpage;
 
-
 use App\Application\Service\ArticleService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +13,7 @@ class ArticleController extends AbstractController
     {
     }
 
-    #[Route('/articles', name: 'app_articles',methods: ['GET'])]
+    #[Route('/articles', name: 'app_articles', methods: ['GET'])]
     public function getAllActiveArticles(): Response
     {
         return $this->render('article/main-page.html.twig', [
@@ -22,13 +21,12 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/articles/{slug}', name: 'app_get_article',methods: ['GET'])]
+    #[Route('/articles/{slug}', name: 'app_get_article', methods: ['GET'])]
     public function getArticleByUniqueCode(string $slug): Response
     {
         $article = $this->articleService->getOneArticle($slug);
 
-        if ($article === null)
-        {
+        if (null === $article) {
             return $this->redirectToRoute('app_article_not_found_page');
         }
 
@@ -37,27 +35,18 @@ class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/articles/not-found-page', name: 'app_article_not_found_page',methods: ['GET'],priority: 2)]
+    #[Route('/articles/not-found-page', name: 'app_article_not_found_page', methods: ['GET'], priority: 2)]
     public function getArticleNotFound(): Response
     {
         return $this->render('article/article-notfound-page.html.twig', [
         ]);
     }
 
-    #[Route('/add-article', name: 'app_add_article',methods: ['GET'],priority: 2)]
+    #[Route('/add-article', name: 'app_add_article', methods: ['GET'], priority: 2)]
     public function addArticle(): Response
     {
         $this->articleService->addArticles();
 
         return $this->redirectToRoute('app_articles');
     }
-
-
-
-
-
-
-
-
-
 }

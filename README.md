@@ -30,8 +30,13 @@
 
 - можно с помощью кнопки которая будет на главной странице по роуту
 ```sh
-  localhost:8083/articles
+  localhost:8000/articles
   ```
+
+Для работы php-cs-fixer
+```sh
+docker-compose run --rm php-cli php ./vendor/bin/php-cs-fixer fix --rules=@PSR12
+```
 
 Ну и далее проверяем все роуты, которые были в задании
 
