@@ -16,6 +16,41 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
+    public function getActiveArticles(): array
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.activity = true')
+            ->orderBy('a.createdDate', 'DESC')
+            ->getQuery()->getResult();
+    }
+
+    public function getArticleByUniqueCode(string $uniqueCode):?Article
+    {
+         return $this->createQueryBuilder('a')
+            ->where('a.activity = true')
+            ->andWhere('a.uniqueCode = :uniqueCode')
+            ->setParameter('uniqueCode',$uniqueCode)
+            ->getQuery()->getOneOrNullResult();
+    }
+
+    public function save(Article $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function remove(Article $entity, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($entity);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
     //    /**
     //     * @return Article[] Returns an array of Article objects
     //     */

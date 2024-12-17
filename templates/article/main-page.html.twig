@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Статьи - Главная страница{% endblock %}
+
+{% block body %}
+<main>
+    <div class="content-block row mt-2 mb-4 pt-4 pb-4 text-center ">
+        {% for article in articles %}
+            <div class="col-lg-6 col-md-6 pb-3">
+                <a href="{{ path('app_get_article',{slug:article.uniqueCode}) }}" class="h3">{{ article.title }}</a>
+            </div>
+        {% endfor %}
+    </div>
+    {% if articles | length < 10 %}
+        <div class="pt-2 row text-center">
+            <a class="btn btn-outline-dark btn-lg" href="{{ path('app_add_article') }}" role="button">Добавить статьи</a>
+        </div>
+    {% endif %}
+</main>
+{% endblock %}

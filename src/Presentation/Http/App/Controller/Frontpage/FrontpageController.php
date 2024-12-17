@@ -8,11 +8,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route(path: '/', name: 'app_frontpage')]
 class FrontpageController extends AbstractController
 {
+    #[Route(path: '/', name: 'app_frontpage')]
     public function __invoke(): Response
     {
-        return $this->render('app/page/frontpage/page.html.twig');
+        return $this->redirectToRoute('app_articles');
     }
 }

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main>
+        <div class="content-block mt-2 mb-4 pt-4 text-center">
+            <h2>{{ article.title }}</h2>
+            <p class="mt-2">{{ article.uniqueCode }}</p>
+            <p class="mt-2">{{ article.description }}</p>
+            <p class="mt-2">{{ article.createdDate|date() }}</p>
+            {% if article.amountViews >= 1000 %}
+                <p class="mt-2">{{ article.amountViews // 1000   }}K</p>
+            {% elseif article.amountViews >= 1000000 %}
+                <p class="mt-2">{{ article.amountViews // 1000000 }}M</p>
+            {% elseif article.amountViews >= 1000000000 %}
+                <p class="mt-2">{{ article.amountViews // 1000000000 }}B</p>
+            {% else %}
+                <p class="mt-2">{{ article.amountViews }}</p>
+            {% endif %}
+        </div>
+    </main>
+{% endblock %}
